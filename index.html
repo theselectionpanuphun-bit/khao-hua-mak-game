@@ -109,6 +109,7 @@ main{display:grid;gap:10px;padding:0 10px 14px}
 <div class="ldin"><h2 class="ldt1">🎰 Lucky Draw</h2><p class="ldt2">สำหรับสมาชิกที่ร่วมกิจกรรม · หมุนวงล้อลุ้นรางวัล</p>
 <div class="ldwh"><svg viewBox="-215 -226 430 442"><g id="ldbu"></g><g id="ldw"></g><g id="ldhub"></g><polygon points="-16,-224 16,-224 0,-184" fill="#e74c3c" stroke="#fff" stroke-width="3"/></svg></div>
 <button id="ldsp" class="ldsp">🎡 หมุนวงล้อ!</button><div id="lds" class="lds"></div><div id="ldbd" class="ldbd"></div><div id="ldh" class="ldh"></div>
+<div class="cr"><button id="ldm1" style="background:#c0392b">➖ ลบของที่ระลึก 1 ชิ้น</button><button id="ldm2" style="background:#27ae60">➕ คืน 1 ชิ้น</button></div>
 <div class="cr"><button id="ldback" style="background:#3498db">🏠 กลับหน้าหลัก</button><button id="ldrs" style="background:#8e44ad">♻️ เริ่มใหม่</button></div></div>
 <div id="ldr" class="ldr hide"><div class="ldc"><div id="ldcf"></div><div id="ldi" style="font-size:64px"></div><h2 id="ldn"></h2><p id="ldp"></p><button id="ldok">ตกลง 🎉</button></div></div></div>
 <div id="cafe" class="ov cafe hide"><div class="cbox"><div id="cfc"></div><h2>☕ BAAN YAI CAFE</h2><p id="cm">ยินดีต้อนรับ! คุณตกจุดที่ 13 รับอาหาร 1 อย่าง + น้ำ 1 แก้ว ฟรี</p><svg id="cs" viewBox="0 0 800 520"></svg><div class="cr"><button id="cfd">🍜 รับอาหารฟรี</button><button id="cdk">🥤 รับน้ำฟรี</button></div><div class="cr" id="tks"></div><div class="cr"><button id="cph" style="background:#3498db">📷 ดูรูปร้านจริง</button><button id="chm" style="background:#e67e22">🏠 กลับหน้าแรก</button></div></div></div>
@@ -230,10 +231,13 @@ const LDK='hua_ld',SPC=['#ffd23f','#ff9f1c'],MC=['#ff6b6b','#4ecdc4','#a78bfa','
 let ldW=[],ldR=[],ldBusy=false,ldTm;
 const ldRnd=n=>{try{return crypto.getRandomValues(new Uint32Array(1))[0]%n}catch(e){return Math.floor(Math.random()*n)}};
 const ldName=id=>id[0]==='s'?'🌟 รางวัลพิเศษ หมายเลข '+id.slice(1):'🎁 ของที่ระลึก ชิ้นที่ '+id.slice(1);
-function ldAll(){const sp=[...Array(9)].map((_,k)=>Math.floor((k+.5)*29/9));let s=0,m=0;const a=[];for(let i=0;i<29;i++)a.push(sp.includes(i)?{t:'s',n:++s,id:'s'+s}:{t:'m',n:++m,id:'m'+m});return a;}
-function ldLoad(){try{ldW=JSON.parse(localStorage.getItem(LDK)||'[]')}catch(e){ldW=[]}}
-function ldSave(){try{localStorage.setItem(LDK,JSON.stringify(ldW))}catch(e){}}
-function ldDraw(){const all=ldAll(),R=all.filter(p=>!ldW.includes(p.id)),n=R.length;ldR=R;
+let ldT=20;
+function ldWm(){return ldW.filter(i=>i[0]==='m').length;}
+function ldList(){const sp=[1,2,3,4,5,6,7,8,9].filter(k=>!ldW.includes('s'+k)),M=Math.max(0,ldT-ldWm()),n=sp.length+M,pos=sp.map((_,k)=>Math.floor((k+.5)*n/sp.length)),a=[];let k=0;
+ for(let i=0;i<n;i++)a.push(pos.includes(i)?{t:'s',n:sp[k++]}:{t:'m'});return a;}
+function ldLoad(){try{ldW=JSON.parse(localStorage.getItem(LDK)||'[]');ldT=parseInt(localStorage.getItem(LDK+'T')||'20',10)}catch(e){ldW=[];ldT=20}if(!(ldT>=0&&ldT<=20))ldT=20;ldT=Math.max(ldT,ldWm());}
+function ldSave(){try{localStorage.setItem(LDK,JSON.stringify(ldW));localStorage.setItem(LDK+'T',ldT)}catch(e){}}
+function ldDraw(){const R=ldList(),n=R.length,Mw=ldWm(),Ms=Math.max(0,ldT-Mw),total=9+ldT;ldR=R;
  const g=$('ldw');g.style.transition='none';g.style.transform='rotate(0deg)';
  let h='<circle r="192" fill="#2a1450"/>';
  if(n===0)h+='<circle r="186" fill="#4a3a6a"/><text y="8" text-anchor="middle" font-size="26" font-weight="bold" fill="#fff">ครบทุกรางวัลแล้ว 🎉</text>';
@@ -243,21 +247,24 @@ function ldDraw(){const all=ldAll(),R=all.filter(p=>!ldW.includes(p.id)),n=R.len
    h+='<text transform="rotate('+(m*180/Math.PI).toFixed(2)+') translate(0,-140)" text-anchor="middle" dominant-baseline="central" font-size="'+fs+'" font-weight="bold" fill="'+(p.t==='s'?'#3b1d00':'#fff')+'">'+(p.t==='s'?p.n:'🎁')+'</text>';});}
  g.innerHTML=h;void g.getBoundingClientRect();g.style.transition='';
  const sl=R.filter(p=>p.t==='s').length;
- $('lds').textContent='เหลือ '+n+' / 29 รางวัล · 🌟 พิเศษ '+sl+' / 9 · 🎁 ของที่ระลึก '+(n-sl)+' / 20';
- $('ldbd').innerHTML=all.map(p=>'<i class="'+(p.t==='s'?'sp':'')+(ldW.includes(p.id)?' wn':'')+'">'+(p.t==='s'?p.n:'🎁')+'</i>').join('');
+ $('lds').textContent='เหลือ '+n+' / '+total+' รางวัล · 🌟 พิเศษ '+sl+' / 9 · 🎁 ของที่ระลึก '+Ms+' / '+ldT;
+ let c='';for(let k=1;k<=9;k++)c+='<i class="sp'+(ldW.includes('s'+k)?' wn':'')+'">'+k+'</i>';for(let k=1;k<=ldT;k++)c+='<i class="'+(k<=Mw?'wn':'')+'">🎁</i>';
+ $('ldbd').innerHTML=c;
  $('ldh').innerHTML=ldW.slice(-5).reverse().map((id,i)=>'ครั้งที่ '+(ldW.length-i)+': '+ldName(id)).join('<br>');
- $('ldsp').disabled=ldBusy||n===0;}
-async function ldSpin(){if(ldBusy||!ldR.length)return;ldBusy=true;$('ldsp').disabled=true;
+ $('ldsp').disabled=ldBusy||n===0;$('ldm1').disabled=ldBusy||Ms===0;$('ldm2').disabled=ldBusy||ldT>=20;}
+async function ldSpin(){if(ldBusy||!ldR.length)return;ldBusy=true;$('ldsp').disabled=true;$('ldm1').disabled=$('ldm2').disabled=true;
  const n=ldR.length,seg=360/n,idx=ldRnd(n),j=(Math.random()-.5)*seg*.7;
  $('ldw').style.transform='rotate('+(360*6+360-(idx*seg+seg/2+j))+'deg)';
- await sleep(4700);const p=ldR[idx];ldW.push(p.id);ldSave();
- $('ldi').textContent=p.t==='s'?'🌟':'🎁';$('ldn').textContent=ldName(p.id);$('ldp').textContent=p.t==='s'?'ยินดีด้วย! คุณได้รางวัลพิเศษ':'ยินดีด้วย! คุณได้ของที่ระลึก';
+ await sleep(4700);const p=ldR[idx],id=p.t==='s'?'s'+p.n:'m'+(ldWm()+1);ldW.push(id);ldSave();
+ $('ldi').textContent=p.t==='s'?'🌟':'🎁';$('ldn').textContent=ldName(id);$('ldp').textContent=p.t==='s'?'ยินดีด้วย! คุณได้รางวัลพิเศษ':'ยินดีด้วย! คุณได้ของที่ระลึก';
  $('ldr').classList.remove('hide');confetti('ldcf');}
+$('ldm1').onclick=()=>{if(ldBusy)return;if(ldT-ldWm()>0){ldT--;ldSave();ldDraw();}};
+$('ldm2').onclick=()=>{if(ldBusy)return;if(ldT<20){ldT++;ldSave();ldDraw();}};
 $('ldsp').onclick=ldSpin;$('ldhub').onclick=ldSpin;
 $('ldok').onclick=()=>{$('ldr').classList.add('hide');$('ldcf').innerHTML='';ldBusy=false;ldDraw();};
 $('ldb').onclick=()=>{ldLoad();ldBusy=false;ldDraw();$('ld').classList.remove('hide');};
 $('ldback').onclick=()=>$('ld').classList.add('hide');
-$('ldrs').onclick=()=>{if(ldBusy)return;const b=$('ldrs');if(b.dataset.c){clearTimeout(ldTm);delete b.dataset.c;b.textContent='♻️ เริ่มใหม่';ldW=[];ldSave();ldDraw();}else{b.dataset.c=1;b.textContent='⚠️ กดอีกครั้งเพื่อยืนยัน';ldTm=setTimeout(()=>{delete b.dataset.c;b.textContent='♻️ เริ่มใหม่';},3500);}};
+$('ldrs').onclick=()=>{if(ldBusy)return;const b=$('ldrs');if(b.dataset.c){clearTimeout(ldTm);delete b.dataset.c;b.textContent='♻️ เริ่มใหม่';ldW=[];ldT=20;ldSave();ldDraw();}else{b.dataset.c=1;b.textContent='⚠️ กดอีกครั้งเพื่อยืนยัน';ldTm=setTimeout(()=>{delete b.dataset.c;b.textContent='♻️ เริ่มใหม่';},3500);}};
 function ldScene(){let s=11;const r=()=>(s=s*16807%2147483647)/2147483647;
  let h='<defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#150f45"/><stop offset=".45" stop-color="#5b2a86"/><stop offset=".75" stop-color="#ff7e5f"/><stop offset="1" stop-color="#ffd194"/></linearGradient><radialGradient id="sg"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient></defs><rect width="800" height="1000" fill="url(#lg)"/>';
  for(let i=0;i<70;i++)h+='<circle class="tw" style="animation-delay:-'+(r()*3).toFixed(1)+'s" cx="'+(r()*800|0)+'" cy="'+(r()*560|0)+'" r="'+(r()*1.8+.6).toFixed(1)+'" fill="#fff"/>';
