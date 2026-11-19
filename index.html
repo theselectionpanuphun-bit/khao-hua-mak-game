@@ -49,7 +49,7 @@ main{display:grid;gap:10px;padding:0 10px 14px}
 #pb{position:absolute;top:-14px;left:-10px;background:#f39c12;color:#fff;border-radius:20px;padding:6px 14px;font-weight:bold;transform:rotate(-6deg);animation:bn .6s .7s both}
 @keyframes bn{from{transform:scale(0) rotate(-30deg)}to{transform:scale(1) rotate(-6deg)}}
 #pt{margin:10px 4px;font-size:15px;line-height:1.4;animation:fi .8s .9s both}@keyframes fi{from{opacity:0}to{opacity:1}}
-#cf i,#cfc i{position:fixed;top:-20px;width:10px;height:14px;animation:fall 2.6s linear forwards}
+#cf i,#cfc i,#ldcf i{position:fixed;top:-20px;width:10px;height:14px;animation:fall 2.6s linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
 .gr{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0}
 .th{position:relative;padding:0;aspect-ratio:1;overflow:hidden;border-radius:8px;background:#222}
@@ -71,6 +71,30 @@ main{display:grid;gap:10px;padding:0 10px 14px}
 .promo{width:calc(100% - 20px);max-width:1080px;margin:0 auto 8px;padding:8px 12px;border-radius:12px;text-align:center;font-weight:bold;font-size:15px;color:#5a3a00;border:2px solid #f39c12;background:linear-gradient(90deg,#ffe27a,#ffb347,#ffe27a);background-size:200% 100%;animation:shine 3s linear infinite,pu2 1.6s ease-in-out infinite alternate}
 @keyframes shine{to{background-position:-200% 0}}
 .sg{animation:bob 2.4s ease-in-out infinite alternate}@keyframes bob{to{transform:translateY(8px)}}@keyframes pu2{to{transform:scale(1.02)}}
+#ld{background:#150f45;z-index:16;align-items:flex-start}
+.ldbgw{position:fixed;inset:0;z-index:0;overflow:hidden}.ldbgw svg{width:100%;height:100%;display:block}
+#ldfl{position:absolute;inset:0;pointer-events:none}
+.bl{position:absolute;bottom:-60px;animation:rise linear infinite}@keyframes rise{from{transform:translateY(0) rotate(-8deg)}to{transform:translateY(-125vh) rotate(8deg)}}
+.tw{animation:twk 2.4s ease-in-out infinite alternate}@keyframes twk{from{opacity:.2}to{opacity:1}}
+.fr{transform-box:fill-box;transform-origin:50% 100%;animation:fk .4s ease-in-out infinite alternate}@keyframes fk{to{transform:scale(1.15,.85)}}
+.bu{animation:bl 1s steps(1) infinite}@keyframes bl{0%{fill:#fff6a8}50%{fill:#ff9f1c}}
+.ldin{position:relative;z-index:1;margin:auto;max-width:520px;width:100%;text-align:center;color:#fff;padding:14px 4px 24px;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+.ldt1{margin:30px 0 0;font-size:34px;color:#ffe27a;text-shadow:0 0 14px #ff9f1c,0 3px 0 #7a2e00}.ldt2{margin:2px 0 8px;font-size:15px}
+.ldwh svg{width:min(88vw,56vh,430px);height:auto;display:block;margin:0 auto}
+#ldw{transition:transform 4.5s cubic-bezier(.12,.7,.1,1)}
+.ldsp{font-size:22px;padding:14px 30px;margin:10px 0 6px;background:linear-gradient(#ffd23f,#ff9f1c);color:#5a2a00;text-shadow:none;box-shadow:0 6px 0 #b86a00}
+.ldsp:active{transform:translateY(3px);box-shadow:0 3px 0 #b86a00}
+.lds{font-size:14px;margin:6px 8px}
+.ldbd{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin:6px 8px}
+.ldbd i{font-style:normal;min-width:26px;height:26px;line-height:26px;border-radius:50%;background:rgba(255,255,255,.22);font-size:13px;text-shadow:none;color:#fff}
+.ldbd i.sp{background:#ffd23f;color:#3b1d00;font-weight:bold}.ldbd i.wn{opacity:.3;text-decoration:line-through}
+.ldh{font-size:14px;min-height:20px;line-height:1.6}
+.ldr{position:fixed;inset:0;z-index:5;background:rgba(10,5,30,.78);display:flex;align-items:center;justify-content:center;padding:16px}
+.ldc{background:#fff8d6;color:#5a2a00;border:6px solid #f39c12;border-radius:22px;padding:22px;max-width:380px;width:100%;text-align:center;text-shadow:none;animation:pop2 .6s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes pop2{from{transform:scale(.3) rotate(-10deg);opacity:0}to{transform:scale(1);opacity:1}}
+.ldc h2{margin:8px 0;font-size:26px}
+.ldbtn{display:block;width:100%;margin-top:12px;padding:12px;font-size:16px;background:linear-gradient(90deg,#ffd23f,#ff9f1c);color:#5a2a00;animation:gp 1.8s infinite}
+@keyframes gp{0%{box-shadow:0 0 0 0 rgba(255,210,63,.7)}70%{box-shadow:0 0 0 12px rgba(255,210,63,0)}100%{box-shadow:0 0 0 0 rgba(255,210,63,0)}}
 </style></head><body>
 <header><h1>⛰️ เดินป่าเขาหัวหมวก</h1><div class="st">จุดที่ <b id="sp">0</b>/20 · ภาพ <b id="cl">0</b></div><button id="alb">📷 อัลบั้ม</button><button id="rst" style="background:#e67e22">🔄 เริ่มใหม่</button></header>
 <div class="promo">🎁 หากคุณตกจุดที่ 13 จะได้รางวัลพิเศษ! มาสนุกกัน 🎉</div>
@@ -79,8 +103,14 @@ main{display:grid;gap:10px;padding:0 10px 14px}
 <aside class="panel"><div class="wh"><svg viewBox="-120 -126 240 246"><g id="wg"></g><circle r="14" fill="#fff" stroke="#8a5a2a" stroke-width="4"/><polygon points="-11,-124 11,-124 0,-98" fill="#e74c3c" stroke="#fff" stroke-width="2"/></svg></div>
 <div><button id="spin" class="big" disabled>🎡 หมุนวงล้อ</button><div id="msg"></div></div></aside>
 </main>
-<div id="ov" class="ov"><div class="box"><h2>⛰️ เดินป่าเขาหัวหมวก</h2><p>หมุนวงล้อ 1–3 แล้วเดินตามเลขขึ้นเขา เก็บภาพ 20 จุด ขึ้นเขาหัวหมวกแล้วเดินลงไปที่ลำธาร<br>เลือกตัวละครของคุณ</p><div class="pick"><button data-s="0"></button><button data-s="1"></button></div></div></div>
+<div id="ov" class="ov"><div class="box"><h2>⛰️ เดินป่าเขาหัวหมวก</h2><p>หมุนวงล้อ 1–3 แล้วเดินตามเลขขึ้นเขา เก็บภาพ 20 จุด ขึ้นเขาหัวหมวกแล้วเดินลงไปที่ลำธาร<br>เลือกตัวละครของคุณ</p><div class="pick"><button data-s="0"></button><button data-s="1"></button></div><button id="ldb" class="ldbtn">🎰 Lucky Draw สำหรับสมาชิกที่ร่วมกิจกรรม</button></div></div>
 <div id="pm" class="ov hide"><div id="cf"></div><div class="pol"><div id="pb"></div><div class="ph"><img id="pi" alt=""></div><p id="pt"></p><button id="pn"></button><button id="p2" class="hide"></button></div></div>
+<div id="ld" class="ov hide"><div class="ldbgw"><svg id="ldbg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice"></svg><div id="ldfl"></div></div>
+<div class="ldin"><h2 class="ldt1">🎰 Lucky Draw</h2><p class="ldt2">สำหรับสมาชิกที่ร่วมกิจกรรม · หมุนวงล้อลุ้นรางวัล</p>
+<div class="ldwh"><svg viewBox="-215 -226 430 442"><g id="ldbu"></g><g id="ldw"></g><g id="ldhub"></g><polygon points="-16,-224 16,-224 0,-184" fill="#e74c3c" stroke="#fff" stroke-width="3"/></svg></div>
+<button id="ldsp" class="ldsp">🎡 หมุนวงล้อ!</button><div id="lds" class="lds"></div><div id="ldbd" class="ldbd"></div><div id="ldh" class="ldh"></div>
+<div class="cr"><button id="ldback" style="background:#3498db">🏠 กลับหน้าหลัก</button><button id="ldrs" style="background:#8e44ad">♻️ เริ่มใหม่</button></div></div>
+<div id="ldr" class="ldr hide"><div class="ldc"><div id="ldcf"></div><div id="ldi" style="font-size:64px"></div><h2 id="ldn"></h2><p id="ldp"></p><button id="ldok">ตกลง 🎉</button></div></div></div>
 <div id="cafe" class="ov cafe hide"><div class="cbox"><div id="cfc"></div><h2>☕ BAAN YAI CAFE</h2><p id="cm">ยินดีต้อนรับ! คุณตกจุดที่ 13 รับอาหาร 1 อย่าง + น้ำ 1 แก้ว ฟรี</p><svg id="cs" viewBox="0 0 800 520"></svg><div class="cr"><button id="cfd">🍜 รับอาหารฟรี</button><button id="cdk">🥤 รับน้ำฟรี</button></div><div class="cr" id="tks"></div><div class="cr"><button id="cph" style="background:#3498db">📷 ดูรูปร้านจริง</button><button id="chm" style="background:#e67e22">🏠 กลับหน้าแรก</button></div></div></div>
 <div id="fin" class="ov hide"><div class="box"><h2 id="ft"></h2><p id="fs"></p><div class="gr" id="gr"></div><button id="cls">ปิด</button> <button id="again" style="background:#f39c12">🔄 เล่นอีกครั้ง</button></div></div>
 <script>
@@ -196,5 +226,53 @@ function claim(k){if(cl[k])return;cl[k]=1;const f=k==='f',code='BYC-'+Math.rando
 $('cfd').onclick=()=>claim('f');$('cdk').onclick=()=>claim('d');
 $('cph').onclick=()=>viewPic(CAFEIMG,'📍 BAAN YAI CAFE','ร้านจริง BAAN YAI CAFE');
 $('chm').onclick=()=>{$('cafe').classList.add('hide');newGame();};
+const LDK='hua_ld',SPC=['#ffd23f','#ff9f1c'],MC=['#ff6b6b','#4ecdc4','#a78bfa','#5dd39e','#74b9ff','#fd79a8'];
+let ldW=[],ldR=[],ldBusy=false,ldTm;
+const ldRnd=n=>{try{return crypto.getRandomValues(new Uint32Array(1))[0]%n}catch(e){return Math.floor(Math.random()*n)}};
+const ldName=id=>id[0]==='s'?'🌟 รางวัลพิเศษ หมายเลข '+id.slice(1):'🎁 ของที่ระลึก ชิ้นที่ '+id.slice(1);
+function ldAll(){const sp=[...Array(9)].map((_,k)=>Math.floor((k+.5)*29/9));let s=0,m=0;const a=[];for(let i=0;i<29;i++)a.push(sp.includes(i)?{t:'s',n:++s,id:'s'+s}:{t:'m',n:++m,id:'m'+m});return a;}
+function ldLoad(){try{ldW=JSON.parse(localStorage.getItem(LDK)||'[]')}catch(e){ldW=[]}}
+function ldSave(){try{localStorage.setItem(LDK,JSON.stringify(ldW))}catch(e){}}
+function ldDraw(){const all=ldAll(),R=all.filter(p=>!ldW.includes(p.id)),n=R.length;ldR=R;
+ const g=$('ldw');g.style.transition='none';g.style.transform='rotate(0deg)';
+ let h='<circle r="192" fill="#2a1450"/>';
+ if(n===0)h+='<circle r="186" fill="#4a3a6a"/><text y="8" text-anchor="middle" font-size="26" font-weight="bold" fill="#fff">ครบทุกรางวัลแล้ว 🎉</text>';
+ else{const seg=2*Math.PI/n,fs=n>20?16:n>12?20:n>4?28:34,r=186;
+  R.forEach((p,i)=>{const a0=i*seg,a1=(i+1)*seg,m=(a0+a1)/2,col=p.t==='s'?SPC[i%2]:MC[i%6];
+   h+=n===1?'<circle r="186" fill="'+col+'"/>':'<path d="M0 0L'+(r*Math.sin(a0)).toFixed(2)+' '+(-r*Math.cos(a0)).toFixed(2)+'A'+r+' '+r+' 0 0 1 '+(r*Math.sin(a1)).toFixed(2)+' '+(-r*Math.cos(a1)).toFixed(2)+'Z" fill="'+col+'" stroke="#fff" stroke-width="2"/>';
+   h+='<text transform="rotate('+(m*180/Math.PI).toFixed(2)+') translate(0,-140)" text-anchor="middle" dominant-baseline="central" font-size="'+fs+'" font-weight="bold" fill="'+(p.t==='s'?'#3b1d00':'#fff')+'">'+(p.t==='s'?p.n:'🎁')+'</text>';});}
+ g.innerHTML=h;void g.getBoundingClientRect();g.style.transition='';
+ const sl=R.filter(p=>p.t==='s').length;
+ $('lds').textContent='เหลือ '+n+' / 29 รางวัล · 🌟 พิเศษ '+sl+' / 9 · 🎁 ของที่ระลึก '+(n-sl)+' / 20';
+ $('ldbd').innerHTML=all.map(p=>'<i class="'+(p.t==='s'?'sp':'')+(ldW.includes(p.id)?' wn':'')+'">'+(p.t==='s'?p.n:'🎁')+'</i>').join('');
+ $('ldh').innerHTML=ldW.slice(-5).reverse().map((id,i)=>'ครั้งที่ '+(ldW.length-i)+': '+ldName(id)).join('<br>');
+ $('ldsp').disabled=ldBusy||n===0;}
+async function ldSpin(){if(ldBusy||!ldR.length)return;ldBusy=true;$('ldsp').disabled=true;
+ const n=ldR.length,seg=360/n,idx=ldRnd(n),j=(Math.random()-.5)*seg*.7;
+ $('ldw').style.transform='rotate('+(360*6+360-(idx*seg+seg/2+j))+'deg)';
+ await sleep(4700);const p=ldR[idx];ldW.push(p.id);ldSave();
+ $('ldi').textContent=p.t==='s'?'🌟':'🎁';$('ldn').textContent=ldName(p.id);$('ldp').textContent=p.t==='s'?'ยินดีด้วย! คุณได้รางวัลพิเศษ':'ยินดีด้วย! คุณได้ของที่ระลึก';
+ $('ldr').classList.remove('hide');confetti('ldcf');}
+$('ldsp').onclick=ldSpin;$('ldhub').onclick=ldSpin;
+$('ldok').onclick=()=>{$('ldr').classList.add('hide');$('ldcf').innerHTML='';ldBusy=false;ldDraw();};
+$('ldb').onclick=()=>{ldLoad();ldBusy=false;ldDraw();$('ld').classList.remove('hide');};
+$('ldback').onclick=()=>$('ld').classList.add('hide');
+$('ldrs').onclick=()=>{if(ldBusy)return;const b=$('ldrs');if(b.dataset.c){clearTimeout(ldTm);delete b.dataset.c;b.textContent='♻️ เริ่มใหม่';ldW=[];ldSave();ldDraw();}else{b.dataset.c=1;b.textContent='⚠️ กดอีกครั้งเพื่อยืนยัน';ldTm=setTimeout(()=>{delete b.dataset.c;b.textContent='♻️ เริ่มใหม่';},3500);}};
+function ldScene(){let s=11;const r=()=>(s=s*16807%2147483647)/2147483647;
+ let h='<defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#150f45"/><stop offset=".45" stop-color="#5b2a86"/><stop offset=".75" stop-color="#ff7e5f"/><stop offset="1" stop-color="#ffd194"/></linearGradient><radialGradient id="sg"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient></defs><rect width="800" height="1000" fill="url(#lg)"/>';
+ for(let i=0;i<70;i++)h+='<circle class="tw" style="animation-delay:-'+(r()*3).toFixed(1)+'s" cx="'+(r()*800|0)+'" cy="'+(r()*560|0)+'" r="'+(r()*1.8+.6).toFixed(1)+'" fill="#fff"/>';
+ h+='<circle cx="400" cy="700" r="230" fill="url(#sg)"/><circle cx="400" cy="700" r="80" fill="#ffd27a"/>';
+ h+='<path d="M0 720L140 600 260 690 380 580 520 700 660 610 800 700V1000H0Z" fill="#7a4a9e" opacity=".85"/><path d="M0 790L120 700 250 780 400 680 560 790 700 710 800 780V1000H0Z" fill="#3f2a72"/>';
+ h+='<path d="M668 712Q660 650 676 630Q702 622 712 640Q718 690 712 714Z" fill="#241a4d"/><ellipse cx="694" cy="624" rx="14" ry="9" fill="#241a4d"/>';
+ h+='<path d="M0 860L150 790 300 850 450 800 620 860 800 810V1000H0Z" fill="#241a4d"/>';
+ for(let i=0;i<14;i++){const x=r()*800,hh=60+r()*90;h+='<rect x="'+x.toFixed(0)+'" y="'+(940-hh).toFixed(0)+'" width="5" height="'+hh.toFixed(0)+'" fill="#150f35"/><ellipse cx="'+(x+2).toFixed(0)+'" cy="'+(940-hh).toFixed(0)+'" rx="16" ry="9" fill="#150f35"/>';}
+ h+='<rect y="930" width="800" height="70" fill="#150f35"/><path d="M90 935L150 860 210 935Z" fill="#ff7e5f"/><path d="M150 860L135 935H165Z" fill="#8a3b2b"/><ellipse class="fr" cx="270" cy="930" rx="14" ry="22" fill="#ffb300"/><ellipse class="fr" style="animation-delay:-.3s" cx="270" cy="934" rx="8" ry="14" fill="#fff3b0"/>';
+ h+='<path d="M0 28Q400 96 800 28" stroke="#fff" stroke-width="3" fill="none" opacity=".8"/>';
+ for(let x=0;x<=800;x+=44){const y=28+34*Math.sin(x/800*Math.PI);h+='<path d="M'+x+' '+y.toFixed(1)+'l22 0-11 28Z" fill="'+['#ff6b6b','#ffd23f','#4ecdc4','#a78bfa','#ff9f1c'][(x/44)%5]+'"/>';}
+ return h;}
+(function(){$('ldbg').innerHTML=ldScene();
+ let b='<circle r="200" fill="none" stroke="#e2a600" stroke-width="16"/>';for(let i=0;i<24;i++){const a=i*Math.PI/12;b+='<circle class="bu" style="animation-delay:-'+(i%2*.5)+'s" cx="'+(200*Math.sin(a)).toFixed(1)+'" cy="'+(-200*Math.cos(a)).toFixed(1)+'" r="4.5" fill="#fff6a8"/>';}
+ $('ldbu').innerHTML=b;$('ldhub').innerHTML='<circle r="30" fill="#fff" stroke="#e2a600" stroke-width="6"/><text y="9" text-anchor="middle" font-size="26">🎰</text>';$('ldhub').style.cursor='pointer';
+ let f='';for(let i=0;i<10;i++)f+='<span class="bl" style="left:'+(Math.random()*94|0)+'%;font-size:'+(20+Math.random()*16|0)+'px;animation-duration:'+(10+Math.random()*8|0)+'s;animation-delay:-'+(Math.random()*12|0)+'s">'+['🏮','🎈','✨','🎁'][i%4]+'</span>';$('ldfl').innerHTML=f;})();
 buildMap();mv(0);upd();
 </script></body></html>
